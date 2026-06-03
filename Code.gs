@@ -1,8 +1,7 @@
 function doGet(e) {
-  // Pastikan nama 'Index' di bawah ini sesuai dengan nama file HTML utama Anda
   return HtmlService.createHtmlOutputFromFile('Index')
       .setTitle('Apotek Indocement')
-      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL); // <-- BARIS PENYELAMAT
+      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL); // <- INI WAJIB ADA
 }
 
 // 1. AUTENTIKASI & HELPER EMAIL
@@ -125,16 +124,29 @@ function inputBarangSupplier(namaObat, batch, qty, tglExp, satuan) {
 function updateBarang(id, n, b, q, t) {
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Stok_Master');
   const data = sheet.getDataRange().getValues();
+  
   for (let i = 1; i < data.length; i++) {
     if (data[i][0] === id) {
-      sheet.getRange(i+1, 2).setValue(n); sheet.getRange(i+1, 3).setValue(b);
+      sheet.getRange(i+1, 2).setValue(n); 
+      sheet.getRange(i+1, 3).setValue(b);
       sheet.getRange(i+1, 4).setValue(parseInt(q));
-      if (t.includes("-")) t = Utilities.formatDate(new Date(t), "GMT+7", "dd/MM/yyyy");
+      
+      // === PERBAIKAN AMAN DI SINI ===
+      if (t && typeof t === "string" && t.includes("-")) {
+        // Membongkar "YYYY-MM-DD" dari input HTML secara manual agar sesuai zona waktu lokal
+        const parts = t.split("-");
+        t = new Date(parts[0], parts[1] - 1, parts[2]); 
+      }
+      // ==============================
+      
+      // Memasukkan objek Date asli ke Google Sheets (bukan teks string lagi)
       sheet.getRange(i+1, 7).setValue(t);
+      
       return { success: true, message: "Data obat diperbarui!" };
     }
   }
 }
+
 function hapusBarangMassal(idArray) {
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Stok_Master');
   const data = sheet.getDataRange().getValues();

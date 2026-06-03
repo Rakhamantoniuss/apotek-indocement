@@ -1,7 +1,8 @@
 function doGet(e) {
+  // Pastikan nama 'Index' di bawah ini sesuai dengan nama file HTML utama Anda
   return HtmlService.createHtmlOutputFromFile('Index')
       .setTitle('Apotek Indocement')
-      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL); // <- INI WAJIB ADA
+      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL); // <-- BARIS PENYELAMAT
 }
 
 // 1. AUTENTIKASI & HELPER EMAIL
@@ -137,19 +138,18 @@ function updateBarang(id, n, b, q, t) {
         let strDate = t.toString().trim();
         
         if (strDate.includes("-")) {
-          // Biasanya dari <input type="date"> HTML bawaan -> YYYY-MM-DD
           const parts = strDate.split("-");
           if (parts[0].length === 4) {
-            dateObj = new Date(parts[0], parts[1] - 1, parts[2]);
+            // Format YYYY-MM-DD (dari input date HTML)
+            dateObj = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
           } else {
-            // Jika formatnya DD-MM-YYYY
-            dateObj = new Date(parts[2], parts[1] - 1, parts[0]);
+            // Format DD-MM-YYYY
+            dateObj = new Date(parseInt(parts[2]), parseInt(parts[1]) - 1, parseInt(parts[0]));
           }
         } else if (strDate.includes("/")) {
-          // Jika terbaca dari teks tabel -> DD/MM/YYYY
+          // Format DD/MM/YYYY (dari tampilan tabel sheet)
           const parts = strDate.split("/");
-          // Karena Google Sheet sudah kita ubah ke Indonesia, parts[0] PASTI HARI, parts[1] PASTI BULAN
-          dateObj = new Date(parts[2], parts[1] - 1, parts[0]);
+          dateObj = new Date(parseInt(parts[2]), parseInt(parts[1]) - 1, parseInt(parts[0]));
         } else {
           dateObj = new Date(strDate);
         }
@@ -158,9 +158,9 @@ function updateBarang(id, n, b, q, t) {
         const cellTanggal = sheet.getRange(i+1, 7);
         if (dateObj && !isNaN(dateObj.getTime())) {
           cellTanggal.setValue(dateObj);
-          cellTanggal.setNumberFormat("dd/MM/yyyy"); // Paksa format tampilan di sheet jadi Hari/Bulan/Tahun
+          cellTanggal.setNumberFormat("dd/MM/yyyy");
         } else {
-          cellTanggal.setValue(t); // Cadangan jika berupa teks biasa
+          cellTanggal.setValue(t);
         }
       }
       // ====================================
@@ -168,13 +168,6 @@ function updateBarang(id, n, b, q, t) {
       return { success: true, message: "Data obat diperbarui!" };
     }
   }
-}
-
-function hapusBarangMassal(idArray) {
-  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Stok_Master');
-  const data = sheet.getDataRange().getValues();
-  for (let i = data.length - 1; i >= 1; i--) { if (idArray.includes(data[i][0])) sheet.deleteRow(i + 1); }
-  return { success: true, message: "Item berhasil dihapus!" };
 }
 
 // 4. KIRIM & TERIMA MUTASI [Tetap sama logicnya]

@@ -1,8 +1,15 @@
 function doGet(e) {
-  // Pastikan nama 'Index' di bawah ini sesuai dengan nama file HTML utama Anda
-  return HtmlService.createHtmlOutputFromFile('Index')
-      .setTitle('Apotek Indocement')
-      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL); // <-- BARIS PENYELAMAT
+  return HtmlService
+    .createTemplateFromFile('Index')
+    .evaluate()
+    .setTitle('Apotek Indocement')
+    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+}
+
+function include(filename) {
+  return HtmlService
+    .createHtmlOutputFromFile(filename)
+    .getContent();
 }
 
 // 1. AUTENTIKASI & HELPER EMAIL

@@ -15,7 +15,7 @@
       <img src="https://i.postimg.cc/qRZbFXyW/logo-indocement.png" 
            style="width: 52px; height: 52px; object-fit: contain; border-radius: 50%; background: rgba(255,255,255,0.15); padding: 4px;" alt="Logo">
       <div style="text-align: left;">
-        <h2 style="margin: 0; font-weight: 700; color: #ffffff; font-size: 20px; line-height: 1.2;">Apotek Indocement</h2>
+        <h2 style="margin: 0; font-weight: 700; color: #ffffff; font-size: 20px; line-height: 1.2;">Farmasi klinik Indocement</h2>
         <p style="margin: 3px 0 0; font-size: 13px; color: rgba(255,255,255,0.75);">Sistem Monitoring Obat</p>
       </div>
     </div>
@@ -119,12 +119,12 @@
         <div class="welcome-banner">
           <i class="fas fa-heartbeat bg-icon" style="position: absolute; right: -20px; top: -30px; font-size: 150px; opacity: 0.1;"></i>
           <h2>Selamat Datang, <span id="welcomeName">Staff</span>!</h2>
-          <p>Pantau log mutasi, transaksi apotek, dan perhatikan notifikasi batas kedaluwarsa obat secara cermat untuk memastikan pelayanan prima dan kualitas stok menjaga kesehatan pasien.</p>
+          <p>Pantau log mutasi, transaksi klinik, dan perhatikan notifikasi batas kedaluwarsa obat secara cermat untuk memastikan pelayanan prima dan kualitas stok menjaga kesehatan pasien.</p>
         </div>
         
         <div class="dashboard-metrics">
           <div class="metric-card" style="border-left-color: #3b82f6;"><h2 id="cardTotalGudang">0</h2><p>Total Stok Gudang</p></div>
-          <div class="metric-card" style="border-left-color: #10b981;"><h2 id="cardTotalApotek">0</h2><p>Total Stok Apotek</p></div>
+          <div class="metric-card" style="border-left-color: #10b981;"><h2 id="cardTotalApotek">0</h2><p>Total Stok Klinik</p></div>
           <div class="metric-card" style="border-left-color: #8b5cf6;"><h2 id="cardTransaksi">0</h2><p>Total Trx. Apotek</p></div>
           <div class="metric-card" style="border-left-color: #ef4444;"><h2 id="cardKritis">0</h2><p>Item Kedaluwarsa/Kritis</p></div>
         </div>
@@ -204,7 +204,7 @@
               <thead><tr><th>Nama Obat / Batch</th><th>Jumlah</th><th>Hapus</th></tr></thead>
               <tbody id="cartBody"></tbody>
             </table>
-            <button class="btn-action" style="width:100%" onclick="submitKirimMassal()">Kirim Semua Ke Antrean Apotek</button>
+            <button class="btn-action" style="width:100%" onclick="submitKirimMassal()">Kirim</button>
           </div>
         </div>
       </div>
@@ -278,7 +278,7 @@
                 <tr>
                   <th style="width: 40px;"><input type="checkbox" id="cbAll" onclick="toggleAllCb(this)"></th>
                   <th>Nama Obat</th><th>Batch</th>
-                  <th>Stok Gudang</th><th>Stok Apotek</th>
+                  <th>Stok Gudang</th><th>Stok Klinik</th>
                   <th>Expired Date</th><th>Status</th><th style="text-align:center;">Aksi</th>
                 </tr>
               </thead>

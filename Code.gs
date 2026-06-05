@@ -212,7 +212,7 @@ function terimaMutasi(idMutasi, penerima) {
       for (let j = 1; j < dataStok.length; j++) {
         if (dataStok[j][0] === dataMutasi[i][3]) {
           sheetStok.getRange(j+1, 5).setValue((parseInt(dataStok[j][4])||0) + parseInt(dataMutasi[i][4]));
-          return { success: true, message: "Diterima! Stok Apotek bertambah." };
+          return { success: true, message: "Diterima! Stok Klinik bertambah." };
         }
       }
     }
@@ -264,7 +264,7 @@ function submitTransaksiApotek(cartItems, kasir) {
 
   if(rincianArr.length > 0) {
     sheetTrans.appendRow([idTrans, tgl, rincianArr.join(", "), totalQty, kasir]);
-    return { success: true, message: "Transaksi berhasil dicatat & Stok Apotek telah terpotong!" };
+    return { success: true, message: "Transaksi berhasil dicatat & Stok Klinik telah terpotong!" };
   }
   return { success: false, message: "Gagal memproses transaksi." };
 }
